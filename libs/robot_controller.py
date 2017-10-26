@@ -46,8 +46,8 @@ class Snatch3r(object):
         assert left_motor.connected
         assert right_motor.connected
 
-        left_motor.run_to_rel_pos(position_sp=degree*5.6, speed_sp=speed)
-        right_motor.run_to_rel_pos(position_sp=-degree*5.6, speed_sp=speed)
+        left_motor.run_to_rel_pos(position_sp=degree*5, speed_sp=speed)
+        right_motor.run_to_rel_pos(position_sp=-degree*5, speed_sp=speed)
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()

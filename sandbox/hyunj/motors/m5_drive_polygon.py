@@ -34,7 +34,7 @@ def main():
         if edge_length_in == 0:
             break
 
-        # TODO: 2. Individually implement the code here to use your drive_inches and turn_degrees library methods to
+        # DONE: 2. Individually implement the code here to use your drive_inches and turn_degrees library methods to
         for k in range(sides):
             robot.drive_inches(edge_length_in,speed_deg_per_second)
             robot.turn_degree(turn_amount,speed_deg_per_second)
