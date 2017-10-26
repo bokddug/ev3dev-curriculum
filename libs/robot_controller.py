@@ -33,10 +33,24 @@ class Snatch3r(object):
         left_motor.run_to_rel_pos(position_sp=degrees, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         right_motor.run_to_rel_pos(position_sp=degrees, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
 
-    def turn_degree(self,degree_to_turn,turn_speed_sp):
-        self.degree_to_turn= degree_
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+    def turn_degree(self,degree,speed):
+        self.degree_to_turn= degree
         self.turn_speed_sp= speed
 
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        assert left_motor.connected
+        assert right_motor.connected
+
+        left_motor.run_to_rel_pos(position_sp=degree*5.6, speed_sp=speed)
+        right_motor.run_to_rel_pos(position_sp=-degree*5.6, speed_sp=speed)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
