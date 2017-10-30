@@ -6,7 +6,7 @@ Much like you have a drive_inches command in your library, you will now make a t
 Authors: David Fisher and JaeJung Hyun.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# DONE: 2. Copy the contents of m3_drive_inches_via_library.py and paste that text into this file below these comments.
+# TODO: 2. Copy the contents of m3_drive_inches_via_library.py and paste that text into this file below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
 #     print("--------------------------------------------")
 #     print(" Turn degrees")
@@ -16,27 +16,27 @@ Authors: David Fisher and JaeJung Hyun.
 import ev3dev.ev3 as ev3
 import robot_controller as robo
 
-print("--------------------------------------------")
-print(" Turn degrees")
-print("--------------------------------------------")
-ev3.Sound.speak("Turn degree").wait()
-robot = robo.Snatch3r()
+    print("--------------------------------------------")
+    print(" Turn degrees")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Turn degree").wait()
+    robot = robo.Snatch3r()
 
-while True:
-    speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
-    if speed_deg_per_second == 0:
-        break
-    turn_deg = int(input("Degrees : "))
-    if turn_deg == 0:
-        break
+    while True:
+        speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
+        if speed_deg_per_second == 0:
+            break
+        inches_target = int(input("Distance (inches): "))
+        if inches_target == 0:
+            break
 
-    robot.turn_degree(turn_deg,speed_deg_per_second)
-    ev3.Sound.beep().wait()  # Fun little beep
+        robot.drive_inches(inches_target, speed_deg_per_second)
+        ev3.Sound.beep().wait()  # Fun little beep
 
-print("Goodbye!")
-ev3.Sound.speak("Goodbye").wait()
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
 
-# DONE: 3. Create a method in your library called turn_degrees that receives the degrees_to_turn and turn_speed_sp
+# TODO: 3. Create a method in your library called turn_degrees that receives the degrees_to_turn and turn_speed_sp
 #   To help you get started here is a potential method signature line that will be in your library.
 #
 #   def turn_degrees(self, degrees_to_turn, turn_speed_sp):
@@ -51,28 +51,13 @@ ev3.Sound.speak("Goodbye").wait()
 #     Use the run_to_rel_pos, .wait_while(ev3.Motor.STATE_RUNNING) pattern to implement your work (not timed driving)
 #   You will have to experimentally determine the formula for accurate position_sp turn amounts.
 
-# DONE: 4. Individually implement the code here to use your turn_degrees library method.
+# TODO: 4. Individually implement the code here to use your turn_degrees library method.
 #   Modify the code to ask the user how many degrees they would like to turn
 #   Ask the user what speed they would like to use for the turn (0 to 900 degrees per second).
 #   Beep after the turn is complete via a beep in this module (tests to make sure the library is blocking)
 #   When the library method is complete have all team members VCS update and test using their own m4_turn_degrees.py
 
-# def turn_degree(self, degree, speed):
-#     self.degree_to_turn = degree
-#     self.turn_speed_sp = speed
-#
-#     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-#     right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-#
-#     assert left_motor.connected
-#     assert right_motor.connected
-#
-#     left_motor.run_to_rel_pos(position_sp=degree * 5.6, speed_sp=speed)
-#     right_motor.run_to_rel_pos(position_sp=-degree * 5.6, speed_sp=speed)
-#     left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-#     right_motor.wait_while(ev3.Motor.STATE_RUNNING)
-
-# DONE: 5. Formally test your work. When you think you have the problem complete run these tests:
+# TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
 #     45 degrees turns left 45 degrees
 #    -45 degrees turn right 45 degrees putting you back where you started
 #     90 degrees turns left 90 degrees

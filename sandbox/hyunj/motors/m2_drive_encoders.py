@@ -42,6 +42,7 @@ def main():
 
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
         ev3.Sound.beep().wait()
 
     print("Goodbye!")
