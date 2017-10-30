@@ -90,7 +90,7 @@ def main():
 
 
 
-    # DONE: 3. Create a remote control object for channel 1. Add lambda callbacks for:
+    # todo: 3. Create a remote control object for channel 1. Add lambda callbacks for:
     #   .on_red_up    to call handle_red_up_1    (that exist already) with state and dc as parameters
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
