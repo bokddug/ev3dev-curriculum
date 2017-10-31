@@ -45,6 +45,7 @@ class DataContainer(object):
         self.running = True
 
 
+
 def main():
     print("--------------------------------------------")
     print("IR Remote")
@@ -58,9 +59,17 @@ def main():
     robot = robo.Snatch3r()
     dc = DataContainer()
 
+
     # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
+    rc1 = ev3.RemoteControl(channel=1)
+    rc1.on_red_up = lambda state:go_forward_button(state)
+    rc1.on_red_down = lambda state:go_backward_button(state)
+    rc1.on_blue_up = lambda state:turn_left_button(state)
+    rc1.on_blue_down = lambda state:turn_right_button(state)
+
+
 
     # For our standard shutdown button.
     btn = ev3.Button()
@@ -86,6 +95,50 @@ def main():
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
+left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+assert left_motor.connected
+assert right_motor.connected
+def go_forward_button(button_state):
+    if button_state:
+        left_motor.run_forever(speed_sp = 900)
+        right_motor.run_forever(speed_sp = 900)
+    else:
+        left_motor.stop()
+        right_motor.stop()
+
+def go_backward_button(button_state):
+    if button_state:
+        left_motor.run_forever(speed_sp = -900)
+        right_motor.run_forever(speed_sp = -900)
+    else:
+        left_motor.stop()
+        right_motor.stop()
+
+def turn_left_button(button_state):
+    if button_state:
+        left_motor.run_forever(speed_sp = -900)
+        right_motor.run_forever(speed_sp = 900)
+    else:
+        left_motor.stop()
+        right_motor.stop()
+
+
+def turn_right_button(button_state):
+    if button_state:
+        left_motor.run_forever(speed_sp = 900)
+        right_motor.run_forever(speed_sp = -900)
+    else:
+        left_motor.stop()
+        right_motor.stop()
+
+
+
+
+
+
+
 
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
