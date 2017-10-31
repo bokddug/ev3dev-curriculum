@@ -53,7 +53,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     
- 
+
     def arm_calibration(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert arm_motor.connected
