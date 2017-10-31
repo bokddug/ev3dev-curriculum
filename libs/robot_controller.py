@@ -96,6 +96,17 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
 
+    def shutdown(self):
+        btn = ev3.Button()
+        while btn.backspace:
+            ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.GREEN)
+            ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.GREEN)
+            ev3.Sound.speak('goodbye').wait()
+            print('Goodbye')
+
+
+
+
 
 
 
