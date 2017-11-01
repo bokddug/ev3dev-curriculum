@@ -44,6 +44,7 @@ class Snatch3r(object):
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
     def turn_degree(self, degree, speed):
+        """Moves the robot to a given degree at a given speed."""
         self.degree_to_turn= degree
         self.turn_speed_sp= speed
         self.left_motor.run_to_rel_pos(position_sp=degree*5, speed_sp=speed)
@@ -68,6 +69,7 @@ class Snatch3r(object):
         self.arm_motor.position = 0
 
     def arm_up(self):
+        """Moves arm up to the MAX position."""
         touch_sensor = ev3.TouchSensor()
         self.arm_motor.run_to_abs_pos(position_sp=14.2 * 360, speed_sp=900)
         while not touch_sensor.is_pressed:
@@ -77,54 +79,16 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def arm_down(self):
+        """Moves the arms down back to the MIN position."""
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=-900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        ev3.Sound.beep().wait()
-
-
-
-
-    def arm_calibration(self):
-        self.arm_motor.run_forever(speed_sp=900)
-        while not self.touch_sensor.is_pressed:
-            time.sleep(0.01)
-        self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        ev3.Sound.beep().wait()
-
-        self.arm_motor.run_to_rel_pos(position_sp=-5112, speed_sp=900)
-        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        ev3.Sound.beep().wait()
-
-        self.arm_motor.position = 0
-
-    def arm_up(self):
-        self.arm_motor.run_to_abs_pos(position_sp=14.2 * 360, speed_sp=900)
-        while not self.touch_sensor.is_pressed:
-            time.sleep(0.01)
-        self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        ev3.Sound.beep().wait()
-
-    def arm_down(self):
-        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=-900)
-        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)  # Blocks until the motor finishes running
         ev3.Sound.beep().wait()
 
 
     def shutdown(self):
         btn = ev3.Button()
         while btn.backspace:
-            ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.GREEN)
-            ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.GREEN)
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
             ev3.Sound.speak('goodbye').wait()
             print('Goodbye')
-
-
-
-
-
-
-
-
-
-
