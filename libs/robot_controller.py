@@ -43,10 +43,9 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
+
     def turn_degree(self, degree, speed):
         """Moves the robot to a given degree at a given speed."""
-        self.degree_to_turn= degree
-        self.turn_speed_sp= speed
         self.left_motor.run_to_rel_pos(position_sp=degree*5, speed_sp=speed)
         self.right_motor.run_to_rel_pos(position_sp=-degree*5, speed_sp=speed)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
@@ -55,7 +54,7 @@ class Snatch3r(object):
 
     def arm_calibration(self):
         """Moves the arm up and then back down to recalibrate it."""
-        touch_sensor=ev3.TouchSensor()
+        touch_sensor = ev3.TouchSensor()
         self.arm_motor.run_forever(speed_sp=900)
         while not touch_sensor.is_pressed:
             time.sleep(0.01)
@@ -84,8 +83,8 @@ class Snatch3r(object):
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-
     def shutdown(self):
+        """Shutdown the program"""
         btn = ev3.Button()
         while btn.backspace:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
