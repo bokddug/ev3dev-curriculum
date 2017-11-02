@@ -43,6 +43,9 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
+    def drive(self, left_sp, right_sp):
+        self.left_motor.run_forever(speed_sp=left_sp )
+        self.right_motor.run_forever(speed_sp=right_sp)
 
     def turn_degree(self, degree, speed):
         """Moves the robot to a given degree at a given speed."""
@@ -51,6 +54,10 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
+
+    def stop(self):
+        self.right_motor.stop()
+        self.left_motor.stop()
 
     def arm_calibration(self):
         """Moves the arm up and then back down to recalibrate it."""
