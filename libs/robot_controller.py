@@ -98,3 +98,13 @@ class Snatch3r(object):
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
             ev3.Sound.speak('goodbye').wait()
             print('Goodbye')
+
+    def loop_forever(self):
+        # This is a convenience method that is only useful if the only input to the robot is coming via mqtt.
+        btn = ev3.Button()
+        self.running = True
+        while not btn.backspace and self.running:
+            # Do nothing while waiting for commands
+            time.sleep(0.01)
+        self.shutdown()
+
