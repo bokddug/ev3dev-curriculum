@@ -25,12 +25,15 @@ class Snatch3r(object):
 
         assert self.left_motor.connected
         assert self.right_motor.connected
-        self.arm_motor = ev3.LargeMotor(ev3.OUTPUT_A)
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
 
         assert self.arm_motor.connected
 
         self.touch_sensor = ev3.TouchSensor()
         assert self.touch_sensor.connected
+
+        self.color_sensor = ev3.ColorSensor()
+        assert self.color_sensor
 
     def drive_inches(self, inches, speed):
         """ Moves the robot forward the requested number of inches at a speed in degrees / second."""
