@@ -51,7 +51,7 @@ import robot_controller as robo
 #
 
 class MyDelegate(object):
- 
+
     def __init__(self):
         self.running = True
 
