@@ -83,11 +83,15 @@ def follow_the_line(robot, white_level, black_level):
     while not robot.touch_sensor.is_pressed:
         if robot.color_sensor.reflected_light_intensity <50:
             robot.drive(400,400)
-            time.sleep(0.1)
         else:
             robot.drive(400,-400)
             time.sleep(0.1)
-        break
+        if robot.touch_sensor.is_pressed:
+            break
+
+
+
+
 
 
     robot.stop()
