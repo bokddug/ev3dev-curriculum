@@ -89,11 +89,6 @@ def follow_the_line(robot, white_level, black_level):
         if robot.touch_sensor.is_pressed:
             break
 
-
-
-
-
-
     robot.stop()
     ev3.Sound.speak("Done")
 
