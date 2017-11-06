@@ -92,31 +92,31 @@ def seek_beacon(robot):
             # Here is some code to help get you started
             if math.fabs(current_heading) < 2:
                 # Close enough of a heading to move forward
+                if current_distance == 1:
+                    robot.drive_inches(4.5,forward_speed)
+                    robot.stop()
+                    print("Found the beacon!")
+                    return True
                 print("On the right heading. Distance: ", current_distance)
-                if current_distance == 0:
-                   print("Found the beacon!")
-                   time.sleep(0.1)
-                   robot.stop()
-
-                else:
-                    robot.drive(forward_speed,forward_speed)
-                    print("On the right heading. Distance: ", current_distance)
+                if current_distance>1:
+                    robot.drive(forward_speed ,forward_speed)
                     time.sleep(0.1)
-
-            elif math.fabs(current_heading) <10:
+            if 2 < math.fabs(current_heading) < 10:
                 if current_heading > 0:
                     robot.drive(turn_speed, -turn_speed)
+                    time.sleep(0.1)
                     print("Adjusting heading right: ", current_heading)
-                    time.sleep(0.1)
-                elif current_heading < 0:
-                    robot.drive(-turn_speed, turn_speed)
-                    print("Adjusting heading left: ", current_heading)
-                    time.sleep(0.1)
 
-            elif math.fabs(current_heading) >10:
+                if current_heading < 0:
+                    robot.drive(-turn_speed, turn_speed)
+                    time.sleep(0.1)
+                    print("Adjusting heading left: ", current_heading)
+
+            if math.fabs(current_heading) >10:
                 robot.stop()
-                print("Heading is too far off to fix: ", current_heading)
                 time.sleep(0.1)
+                print("Heading is too far off to fix: ", current_heading)
+
 
 
         time.sleep(0.2)
