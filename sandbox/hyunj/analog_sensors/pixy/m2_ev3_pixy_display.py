@@ -21,7 +21,7 @@ def main():
     ev3.Sound.speak("Pixy display").wait()
     print("Press the touch sensor to exit this program.")
 
-    # TO DO: 2. Create an MqttClient (no delegate needed since EV3 will only send data, so an empty constructor is fine)
+    # DONE: 2. Create an MqttClient (no delegate needed since EV3 will only send data, so an empty constructor is fine)
     # Then connect to the pc using the connect_to_pc method.
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_pc()
