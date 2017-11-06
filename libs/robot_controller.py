@@ -39,6 +39,9 @@ class Snatch3r(object):
         self.ir_sensor = ev3.InfraredSensor()
         assert self.ir_sensor
 
+        self.pixy = ev3.Sensor(driver_name="pixy-lego")
+        assert self.pixy
+
     def drive_inches(self, inches, speed):
         """ Moves the robot forward the requested number of inches at a speed in degrees / second."""
         degrees_per_inch = 90
