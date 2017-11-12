@@ -5,6 +5,7 @@ import mqtt_remote_method_calls as com
 import robot_controller as robo
 
 
+
 def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
@@ -46,20 +47,6 @@ def main():
     e_button = ttk.Button(main_frame, text="Exit")
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
-
-    find_red_button = ttk.Button(main_frame, text='Find Red')
-    find_red_button.grid(row=7, column=0)
-    find_red_button['command'] = lambda: send_find_red(mqtt_client, left_speed_entry.get(), right_speed_entry.get())
-    find_blue_button = ttk.Button(main_frame, text='Find Blue')
-    find_blue_button.grid(row=8, column=0)
-    find_blue_button['command'] = lambda: send_find_blue(mqtt_client, left_speed_entry.get(), right_speed_entry.get())
-    find_white_button = ttk.Button(main_frame, text='Find White')
-    find_white_button.grid(row=9, column=0)
-    find_white_button['command'] = lambda: send_find_white(mqtt_client, left_speed_entry.get(), right_speed_entry.get())
-    find_black_button = ttk.Button(main_frame, text='Find Black')
-    find_black_button.grid(row=10, column=0)
-    find_black_button['command'] = lambda: send_find_black(mqtt_client, left_speed_entry.get(), right_speed_entry.get())
-
     led_red_both_sides = ttk.Button(main_frame,text='LED RED')
     led_red_both_sides.grid(row=8, column=2)
     led_red_both_sides['command'] = lambda :send_both_red(mqtt_client)
@@ -69,6 +56,11 @@ def main():
     led_black_both_sides = ttk.Button(main_frame, text='TURN OF LED')
     led_black_both_sides.grid(row=10, column=2)
     led_black_both_sides['command'] = lambda: send_both_black(mqtt_client)
+    find_object_button = ttk.Button(main_frame, text = 'Find the object')
+    find_object_button.grid(row=7, column=0)
+    find_object_button['command'] = lambda:send_find_object(mqtt_client,left_speed_entry,right_speed_entry)
+
+
     root.mainloop()
 
 
@@ -114,21 +106,6 @@ def quit_program(mqtt_client, shutdown_ev3):
     exit()
 
 
-def both_red():
-    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
-
-
-def both_green():
-    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-
-
-def both_black():
-    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
-    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-
-
 def send_both_red(mqtt_client):
     print('LEDs---red')
     mqtt_client.send_message('both_red')
@@ -143,35 +120,10 @@ def send_both_black(mqtt_client):
     print('LEDs turn off')
     mqtt_client.send_message('both_black')
 
+def send_find_object(mqtt_client, left_speed_entry, right_speed_entry):
+    print('Find the object')
+    mqtt_client.send_message('find_object',[left_speed_entry.get,right_speed_entry.get])
 
-def find_color(n,left_speed_entry, right_speed_entry):
-    robot = robo.Snatch3r()
-    robot.pixy.mode = n
-    x = robot.pixy.value(1)
-    while True:
-        robot.drive(-int(left_speed_entry.get,right_speed_entry.get))
-        if 150 < x < 170:
-            break
-
-
-def send_find_red(mqtt_client, left_speed_entry, right_speed_entry):
-    print('find red')
-    mqtt_client.send_message('find_color',[1,left_speed_entry,right_speed_entry])
-
-
-def send_find_white(mqtt_client,left_speed_entry, right_speed_entry):
-    print('find white')
-    mqtt_client.send_message('find_color',[2,left_speed_entry,right_speed_entry])
-
-
-def send_find_black(mqtt_client,left_speed_entry, right_speed_entry):
-    print('find black')
-    mqtt_client.send_message('find_color',[3,left_speed_entry,right_speed_entry])
-
-
-def send_find_blue(mqtt_client,left_speed_entry, right_speed_entry):
-    print('find blue')
-    mqtt_client.send_message('find_color',[4,left_speed_entry,right_speed_entry])
 
 
 
