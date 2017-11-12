@@ -53,6 +53,7 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
+
     def drive(self, left_sp, right_sp):
         self.left_motor.run_forever(speed_sp=left_sp )
         self.right_motor.run_forever(speed_sp=right_sp)
@@ -121,11 +122,11 @@ class Snatch3r(object):
     def seek_beacon(self):
         forward_speed = 300
         turn_speed = 100
-        beacon_seaker = ev3.BeaconSeeker(channel=1)
+        beacon_seeker = ev3.BeaconSeeker(channel=1)
 
         while not self.touch_sensor.is_pressed:
-            current_heading = beacon_seaker.heading
-            current_distance = beacon_seaker.distance
+            current_heading = beacon_seeker.heading
+            current_distance = beacon_seeker.distance
             if current_distance == -128:
                 print("IR Remote not found. Distance is -128")
                 self.drive(turn_speed,-turn_speed)
@@ -133,7 +134,7 @@ class Snatch3r(object):
 
                 if math.fabs(current_heading) < 2:
                     if current_distance == 1:
-                        self.drive_inches(4.5, forward_speed)
+                        self.drive_inches(4, forward_speed)
                         self.stop()
                         print("Found the beacon!")
                         return True

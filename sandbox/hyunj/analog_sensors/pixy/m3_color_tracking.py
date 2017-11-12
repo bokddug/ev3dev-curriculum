@@ -16,7 +16,7 @@ import robot_controller as robo
 
 def main():
     print("--------------------------------------------")
-    print(" Color tracking")
+    print(" Color tracking 2")
     print("--------------------------------------------")
     ev3.Sound.speak("Color tracking").wait()
     print("Press the touch sensor to exit this program.")
@@ -25,7 +25,7 @@ def main():
     # Add the pixy property to that class if you have not done so already.
     robot = robo.Snatch3r()
     robot.pixy.mode = "SIG1"
-    turn_speed = 100
+    turn_speed = 150
 
     while not robot.touch_sensor.is_pressed:
 
@@ -39,14 +39,15 @@ def main():
         #   If the Pixy x value is greater than 170 turn right (turn_speed, -turn_speed)
         #   If the Pixy x value is between 150 and 170 stop the robot
         # Continuously track the color until the touch sensor is pressed to end the program.
-        if x <150:
-            robot.drive(-turn_speed,turn_speed)
-        if x >170:
-            robot.drive(turn_speed,-turn_speed)
-        if  150<x and x<170:
+        if 0 < x and x < 150:
+            print("Left", -turn_speed, turn_speed)
+            robot.drive(-turn_speed, turn_speed)
+        elif x > 170:
+            print("Rigth", turn_speed, -turn_speed)
+            robot.drive(turn_speed, -turn_speed)
+        else:
             robot.stop()
-        if robot.touch_sensor.is_pressed:
-            break
+
         time.sleep(0.25)
 
     print("Goodbye!")
