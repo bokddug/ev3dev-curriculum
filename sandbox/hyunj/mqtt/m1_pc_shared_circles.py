@@ -83,7 +83,6 @@ def main():
 
     root.mainloop()
 
-
 # ----------------------------------------------------------------------
 # Tkinter event handlers
 # Left mouse click

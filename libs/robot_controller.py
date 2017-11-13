@@ -42,21 +42,39 @@ class Snatch3r(object):
         self.pixy = ev3.Sensor()
         assert self.pixy
 
+        self.x=0
+        self.y=0
+        self.angle=0
+
     def drive_inches(self, inches, speed):
+
         """ Moves the robot forward the requested number of inches at a speed in degrees / second."""
+
         degrees_per_inch = 90
         degrees = inches * degrees_per_inch
-
         self.left_motor.run_to_rel_pos(position_sp=degrees, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.right_motor.run_to_rel_pos(position_sp=degrees, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
 
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        ev3.Sound.beep().wait()
 
     def drive(self, left_sp, right_sp):
-        self.left_motor.run_forever(speed_sp=left_sp )
+        self.left_motor.run_forever(speed_sp=left_sp)
         self.right_motor.run_forever(speed_sp=right_sp)
+
+
+    def drive_to_point(self, x, y):
+        d_x=x
+        d_y=y
+        destangle= math.atan2(y,x)
+        d_angle=destangle-self.angle
+        degrees_turn= d_angle*(180/math.pi)
+        self.turn_degree(degrees_turn,300)
+        distance=math.sqrt((d_x**2)+(d_y**2))
+        self.drive_inches(distance,300)
+        self.angle=destangle
+        self.x= x
+        self.y= y
+
+
 
     def turn_degree(self, degree, speed):
         """Moves the robot to a given degree at a given speed."""
@@ -204,7 +222,6 @@ class Snatch3r(object):
         time.sleep(1)
         self.drive_inches(21,left_speed)
         self.arm_down()
-
 
 
 
