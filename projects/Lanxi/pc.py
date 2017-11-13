@@ -10,7 +10,7 @@ def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
     root = tkinter.Tk()
-    root.title("Color Selection & Drive motor & LED on ev3")
+    root.title("ev3 self project")
     main_frame = ttk.Frame(root, padding=100, relief='raised')
     main_frame.grid()
     left_speed_label = ttk.Label(main_frame, text="Left")
@@ -49,17 +49,23 @@ def main():
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
     led_red_both_sides = ttk.Button(main_frame,text='LED RED')
     led_red_both_sides.grid(row=8, column=2)
-    led_red_both_sides['command'] = lambda :send_both_red(mqtt_client)
+    led_red_both_sides['command'] = lambda: send_both_red(mqtt_client)
     led_green_both_sides = ttk.Button(main_frame, text='LED GREEN')
     led_green_both_sides.grid(row=9, column=2)
     led_green_both_sides['command'] = lambda: send_both_green(mqtt_client)
-    led_black_both_sides = ttk.Button(main_frame, text='TURN OF LED')
+    led_black_both_sides = ttk.Button(main_frame, text='TURN OOF LED')
     led_black_both_sides.grid(row=10, column=2)
     led_black_both_sides['command'] = lambda: send_both_black(mqtt_client)
-    find_object_button = ttk.Button(main_frame, text = 'Find the object')
-    find_object_button.grid(row=7, column=0)
-    find_object_button['command'] = lambda:send_find_object(mqtt_client,left_speed_entry,right_speed_entry)
-
+    stop_at_blue = ttk.Button(main_frame, text='turn at blue and follow the black with speed 100')
+    stop_at_blue.grid(row=8, column=0)
+    stop_at_blue['command'] = lambda: send_follow_black_line1(mqtt_client, 100, 100, ev3.ColorSensor.COLOR_BLUE)
+    stop_at_red = ttk.Button(main_frame, text='turn at red and follow the black with speed 300')
+    stop_at_red.grid(row=9, column=0)
+    stop_at_red['command'] = lambda: send_follow_black_line1(mqtt_client, 300, 300, ev3.ColorSensor.COLOR_RED)
+    turn_at_blue = ttk.Checkbutton(main_frame, text='blue-100')
+    turn_at_blue.grid(row=10, column=0)
+    turn_at_red = ttk.Checkbutton(main_frame, text='red-300')
+    turn_at_red.grid(row=11, column=0)
 
     root.mainloop()
 
@@ -120,14 +126,10 @@ def send_both_black(mqtt_client):
     print('LEDs turn off')
     mqtt_client.send_message('both_black')
 
-def send_find_object(mqtt_client, left_speed_entry, right_speed_entry):
-    print('Find the object')
-    mqtt_client.send_message('find_object',[left_speed_entry.get,right_speed_entry.get])
 
-
-
-
-
+def send_follow_black_line1(mqtt_client, m, n,color_to_seek):
+    print('follow the black line')
+    mqtt_client.send_message('follow_black_line', [m, n, color_to_seek])
 
 
 main()
