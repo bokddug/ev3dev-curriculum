@@ -185,26 +185,43 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
 
-
     def both_green(self):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-
 
     def both_black(self):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
 
-    def find_object(self,left_speed_entry, right_speed_entry):
-        self.pixy.mode = 'SIG1'
-        x = self.pixy.value(1)
-        while not 150<x and x < 170:
-            self.drive(-left_speed_entry,right_speed_entry)
+    def follow_black_line(self, left_speed, right_speed, color_to_seek):
+        while True:
+            self.drive(left_speed,right_speed)
+            current_color = self.color_sensor.color
+            time.sleep(0.1)
+            if current_color == color_to_seek:
+                self.right_motor.stop(speed_sp=0)
+                self.left_motor.stop(speed_sp=0)
+                ev3.Sound.speak("Stop").wait()
+                break
         self.stop()
-        self.drive_inches(35,left_speed_entry)
-        time.sleep(0.5)
+        self.drive_inches(2.8,left_speed)
+        self.turn_degree(90,left_speed)
+
+        while not self.color_sensor.color == ev3.ColorSensor.COLOR_RED:
+            if self.color_sensor.reflected_light_intensity < 50:
+                self.drive(left_speed, right_speed)
+            if self.color_sensor.reflected_light_intensity >= 50:
+                self.drive(left_speed,-right_speed)
+                time.sleep(0.01)
+            if self.color_sensor.color == ev3.ColorSensor.COLOR_RED:
+                break
         self.stop()
+        ev3.Sound.speak("Done")
+        self.arm_down()
         self.arm_up()
+        time.sleep(1)
+        self.drive_inches(21,left_speed)
+        self.arm_down()
 
 
 
