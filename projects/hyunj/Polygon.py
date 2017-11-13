@@ -1,12 +1,4 @@
-#!/usr/bin/env python3
-"""
-This module lets you integrate your work on drive_inches and turn_degrees into a neat application.
 
-You will ask the user for how many sides they would like in their polygon, the length of each side, and a speed.
-Then your robot will drive that polygon shape.
-
-Authors: David Fisher and JaeJung Hyun.
-"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import robot_controller as robo
@@ -25,7 +17,7 @@ def main():
             break
 
         sides = int(input("Number of sides: "))
-        # Tip for later, try a negative value for Number of sides: to drive CW around the polygon instead of CCW.
+
         if sides == 0:
             break
         turn_amount = 360 / sides
@@ -34,11 +26,9 @@ def main():
         if edge_length_in == 0:
             break
 
-        # DONE: 2. Individually implement the code here to use your drive_inches and turn_degrees library methods to
         for k in range(sides):
             robot.drive_inches(edge_length_in,speed_deg_per_second)
             robot.turn_degree(turn_amount,speed_deg_per_second)
-
 
 
     print("Goodbye!")

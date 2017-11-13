@@ -1,17 +1,3 @@
-"""
-Shows an example of using both Tkinter and MQTT together in a program.  Messages typed into the entry box will be
-sent to the MQTT broker and shared with other people on your team running the program.
-
-In order for this example to work the following must be true:
- - Must have installed mqtt-paho (we did this together many days ago)
- - Must right click the libs folder and select Mark Directory as --> Sources Root
-
-This example runs purely on your computer and does not require the use of the EV3.
-
-Extra credit:
-The LEGO_NUMBER for your team is saved in the mqtt_remote_method_calls.py file.  If you wanted to temporarily modify
-it to spy on a another team for fun go ahead.  I recommend not committing that change though.
-"""
 
 
 import tkinter
