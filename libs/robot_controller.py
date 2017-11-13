@@ -39,7 +39,7 @@ class Snatch3r(object):
         self.ir_sensor = ev3.InfraredSensor()
         assert self.ir_sensor
 
-        self.pixy = ev3.Sensor(driver_name="pixy-lego")
+        self.pixy = ev3.Sensor()
         assert self.pixy
 
         self.x=0
@@ -180,6 +180,31 @@ class Snatch3r(object):
         print("Abandon ship!")
         self.stop()
         return False
+
+    def both_red(self):
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+
+
+    def both_green(self):
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+
+
+    def both_black(self):
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
+    def find_object(self,left_speed_entry, right_speed_entry):
+        self.pixy.mode = 'SIG1'
+        x = self.pixy.value(1)
+        while not 150<x and x < 170:
+            self.drive(-left_speed_entry,right_speed_entry)
+        self.stop()
+        self.drive_inches(35,left_speed_entry)
+        time.sleep(0.5)
+        self.stop()
+        self.arm_up()
 
 
 
