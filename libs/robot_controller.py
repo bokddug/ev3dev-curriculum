@@ -59,7 +59,7 @@ class Snatch3r(object):
     def drive(self, left_sp, right_sp):
         self.left_motor.run_forever(speed_sp=left_sp)
         self.right_motor.run_forever(speed_sp=right_sp)
-
+ 
 
     def drive_to_point(self, x, y):
         d_x=x

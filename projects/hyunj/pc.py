@@ -54,7 +54,7 @@ def main():
     draw1_button = ttk.Button(main_frame, text="Draw")
     draw1_button.grid(row=2, column=3)
     point=Point(0,0)
-    print("point_created")
+
     draw1_button['command'] = lambda: draw(mqtt_client, end_x_entry, end_y_entry,canvas,point)
     root.bind('<q>', lambda event: draw(mqtt_client, end_x_entry, end_y_entry,canvas,point))
 
